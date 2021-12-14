@@ -7,17 +7,14 @@
                         <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="#">Planes</a></li>
+                <li class="breadcrumb-item"><a href="#">Actividades</a></li>
             </ol>
         </nav>
-        <h2 class="h4">Planes</h2>
-        <p class="mb-0">Vista general de todos lo planes</p>
+        <h2 class="h4">Actividades</h2>
+        <p class="mb-0">Vista general de todos las actividades</p>
     </div>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="planes/agregar" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
-            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-            Crear nuevo plan
-        </a>
+
         <!--<div class="btn-group ms-2 ms-lg-3">
             <button type="button" class="btn btn-sm btn-outline-gray-600">Share</button>
             <button type="button" class="btn btn-sm btn-outline-gray-600">Export</button>
@@ -57,57 +54,47 @@
         <thead>
         <tr>
             <th class="border-gray-200">#</th>
-            <th class="border-gray-200">Laboratorio</th>
-            <th class="border-gray-200">Edificio</th>
-            <th class="border-gray-200">Cuatrimestre</th>
-            <th class="border-gray-200">Responsable</th>
-            <th class="border-gray-200">N° Actividades</th>
-            <th class="border-gray-200">Estatus</th>
+            <th class="border-gray-200">Actividad</th>
+            <th class="border-gray-200">Equipo</th>
+            <th class="border-gray-200">Fecha</th>
+            <th class="border-gray-200">status</th>
         </tr>
         </thead>
         <tbody>
-            @foreach($planes as $plan)
-                <!-- Item -->
-                <tr id="plan_{{$plan->id_plan}}">
-                    <td>
-                        <a href="#" class="fw-bold">
-                            000{{$plan->id_plan}}
-                        </a>
-                    </td>
-                    <td>
-                        <span class="fw-normal">{{$plan->laboratorio->nombre}}</span>
-                    </td>
-                    <td>
-                        <span class="fw-normal">{{$plan->laboratorio->edificio}}</span>
-                    </td>
-                    <td><span class="fw-normal">
-                            {{
-                                DateTime::createFromFormat('!m', explode("-", $plan->cuatrimestre->fecha_inicio)[1])->format('F').
-                                ' - '
-                                .DateTime::createFromFormat('!m', explode("-", $plan->cuatrimestre->fecha_fin)[1])->format('F').
-                                ' '.
-                                explode("-", $plan->cuatrimestre->fecha_fin)[0]
-                            }}</span></td>
-                    <td><span class="fw-normal">{{$plan->user->first_name.' '.$plan->user->last_name}}</span></td>
-                    <td><span class="fw-normal">{{count($plan->actividades_plan)}}</span></td>
-                    <td><span class="fw-bold">{{$plan->status}}</span></td>
-                    <td>
-                        <div class="btn-group">
-                            <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @foreach($actividades as $actividad)
+            <!-- Item -->
+            <tr>
+                <td>
+                    <span class="fw-normal">{{$actividad->id_activ_plan}}</span>
+                </td>
+                <td>
+                    <span class="fw-normal">{{$actividad->actividad->Descripcion}}</span>
+                </td>
+                <td>
+                    <span class="fw-normal">{{$actividad->equipo->Descripcion}}</span>
+                </td>
+                <td>
+                    <span class="fw-normal">{{$actividad->fecha_ini}}</span>
+                </td>
+                <td>
+                    <span class="fw-normal">{{$actividad->status}}</span>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="icon icon-sm">
                                         <span class="fas fa-ellipsis-h icon-dark"></span>
                                     </span>
-                                <span class="visually-hidden">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu py-0">
-                                <a class="dropdown-item rounded-top" href="/planes/visualizar?id_plan={{$plan->id_plan}}"><span class="fas fa-eye me-2"></span>Ver detalles</a>
-                                <a class="dropdown-item rounded-top" href="/planes/descargar"><span class="fas fa-download me-2"></span>Descargar formato</a>
-                                <a class="dropdown-item text-danger rounded-bottom" href="#" onclick="AlertEliminar('{{$plan->id_plan}}')"><span class="fas fa-trash-alt me-2"></span>Eliminar</a>
-                            </div>
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu py-0">
+                            <a class="dropdown-item rounded-top" href="#" onclick="TerminarActividad('{{$actividad->id_activ_plan}}')"><span class="fas fa-eye me-2"></span>Terminar actividad</a>
+                            <a class="dropdown-item rounded-top" href="/auxiliar/descargar"><span class="fas fa-download me-2"></span>Descargar formato</a>
                         </div>
-                    </td>
-                </tr>
-            @endforeach
+                    </div>
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
     <!--<div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
@@ -142,7 +129,7 @@
 <div class="col-lg-4">
     <!-- Modal Content -->
     <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
-        <div class="modal-dialog modal-danger modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-info modal-dialog-centered" role="document">
             <div class="modal-content bg-gradient-secondary">
                 <button type="button" class="btn-close theme-settings-close fs-6 ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="modal-header">
@@ -153,13 +140,29 @@
                                             <span class="modal-icon">
                                                <i class="fas fa-5x fa-info-circle"></i>
                                             </span>
-                        <h2 class="h4 modal-title my-3">¿Estás seguro de eliminar este plan?</h2>
-                        <p>Una vez elimnado, no se podrá recuperar</p>
+                        <h2 class="h4 modal-title my-3">Agrega los campos restantes</h2>
+                        <p>Informacón de la actividad</p>
+                        <div class="mb-4">
+                            <label for="birthday">Tipo de mantenimiento</label>
+                            <div class="input-group">
+                                <select id="tipo" class="form-select" aria-label="Default select example" required>
+                                    <option>Selecciona una opción</option>
+                                    <option>Preventivo</option>
+                                    <option>Correctivo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="birthday">Notas del mantenimiento</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" required>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-close-white" data-bs-toggle="modal" data-bs-target="#modal-notification">Cancelar</button>
-                    <button type="button" class="btn btn-sm btn-warning" onclick="EliminarPlan()">Eliminar</button>
+                    <button type="button" class="btn btn-sm btn-success" onclick="Terminar()">Terminar</button>
                 </div>
             </div>
         </div>
@@ -169,17 +172,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
-    var id_plan = false;
-    function AlertEliminar(plan){
-        id_plan = plan;
-        $('#modal-notification').modal('toggle');
-    }
-
-    function EliminarPlan(){
-        $.post('/planes/eliminar', {id_plan: id_plan, _token: '{{csrf_token()}}'}, function(data){
+    var id_actividad = false;
+    function Terminar(){
+        console.log(id_actividad)
+        $.post('/auxiliar/terminarActividad', {id_actividad: id_actividad, tipo: $('#tipo').val(), _token: '{{csrf_token()}}'}, function(data){
             console.log(data);
-            $('#plan_'+id_plan).remove();
             $('#modal-notification').modal('toggle');
         });
+    }
+
+    function TerminarActividad(id_actividad){
+        this.id_actividad = id_actividad
+        $('#modal-notification').modal('toggle');
     }
 </script>

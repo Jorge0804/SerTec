@@ -99,12 +99,18 @@ Route::middleware('auth')->group(function () {
     Route::get('usuarios/agregar', \App\Http\Controllers\Componentes\Usuarios\Agregar::class)->name('usuariosAgregar');
     Route::post('usuarios/registrar', [\App\Http\Controllers\Componentes\Usuarios\Agregar::class, 'Registrar']);
 
+    //Auxiliar
+    Route::get('auxiliar/planes', \App\Http\Controllers\Componentes\Auxiliar\Planes::class)->name('auxPlanes');
+    Route::get('auxiliar/actividades', \App\Http\Controllers\Componentes\Auxiliar\Actividades::class)->name('auxActividades');
+    Route::get('auxiliar/descargar', [\App\Http\Controllers\Componentes\Auxiliar\Actividades::class, 'Descargar']);
+    Route::post('auxiliar/terminarActividad', [\App\Http\Controllers\Componentes\Auxiliar\Actividades::class, 'TerminarActividad']);
+
     Route::get('/menu', function(){
         return \Illuminate\Support\Facades\DB::select('select * from menu inner join menu_rol on menu.id_menu = menu_rol.id_menu where id_rol = 1');
     });
 
     Route::get('/gequipos', function(){
-        return \App\Models\equipos::all();
+        return auth()->id();
     });
 
     //Obtener Usuario
@@ -113,6 +119,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/gplanes', function(){
-        return \App\Models\User::with('rol')->get();
+        return \App\Models\User::Where('id_rol', '=', 3)->get();
     });
 });

@@ -66,21 +66,21 @@
         </tr>
         </thead>
         <tbody>
-            @foreach($planes as $plan)
-                <!-- Item -->
-                <tr id="plan_{{$plan->id_plan}}">
-                    <td>
-                        <a href="#" class="fw-bold">
-                            000{{$plan->id_plan}}
-                        </a>
-                    </td>
-                    <td>
-                        <span class="fw-normal">{{$plan->laboratorio->nombre}}</span>
-                    </td>
-                    <td>
-                        <span class="fw-normal">{{$plan->laboratorio->edificio}}</span>
-                    </td>
-                    <td><span class="fw-normal">
+        @foreach($planes as $plan)
+            <!-- Item -->
+            <tr id="plan_{{$plan->id_plan}}">
+                <td>
+                    <a href="#" class="fw-bold">
+                        000{{$plan->id_plan}}
+                    </a>
+                </td>
+                <td>
+                    <span class="fw-normal">{{$plan->laboratorio->nombre}}</span>
+                </td>
+                <td>
+                    <span class="fw-normal">{{$plan->laboratorio->edificio}}</span>
+                </td>
+                <td><span class="fw-normal">
                             {{
                                 DateTime::createFromFormat('!m', explode("-", $plan->cuatrimestre->fecha_inicio)[1])->format('F').
                                 ' - '
@@ -88,26 +88,24 @@
                                 ' '.
                                 explode("-", $plan->cuatrimestre->fecha_fin)[0]
                             }}</span></td>
-                    <td><span class="fw-normal">{{$plan->user->first_name.' '.$plan->user->last_name}}</span></td>
-                    <td><span class="fw-normal">{{count($plan->actividades_plan)}}</span></td>
-                    <td><span class="fw-bold">{{$plan->status}}</span></td>
-                    <td>
-                        <div class="btn-group">
-                            <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <td><span class="fw-normal">{{$plan->user->first_name.' '.$plan->user->last_name}}</span></td>
+                <td><span class="fw-normal">{{count($plan->actividades_plan)}}</span></td>
+                <td><span class="fw-bold">{{$plan->status}}</span></td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="icon icon-sm">
                                         <span class="fas fa-ellipsis-h icon-dark"></span>
                                     </span>
-                                <span class="visually-hidden">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu py-0">
-                                <a class="dropdown-item rounded-top" href="/planes/visualizar?id_plan={{$plan->id_plan}}"><span class="fas fa-eye me-2"></span>Ver detalles</a>
-                                <a class="dropdown-item rounded-top" href="/planes/descargar"><span class="fas fa-download me-2"></span>Descargar formato</a>
-                                <a class="dropdown-item text-danger rounded-bottom" href="#" onclick="AlertEliminar('{{$plan->id_plan}}')"><span class="fas fa-trash-alt me-2"></span>Eliminar</a>
-                            </div>
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu py-0">
+                            <a class="dropdown-item rounded-top" href="/auxiliar/actividades?id_plan={{$plan->id_plan}}"><span class="fas fa-eye me-2"></span>Ver actividades</a>
                         </div>
-                    </td>
-                </tr>
-            @endforeach
+                    </div>
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
     <!--<div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
@@ -168,18 +166,3 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
-    var id_plan = false;
-    function AlertEliminar(plan){
-        id_plan = plan;
-        $('#modal-notification').modal('toggle');
-    }
-
-    function EliminarPlan(){
-        $.post('/planes/eliminar', {id_plan: id_plan, _token: '{{csrf_token()}}'}, function(data){
-            console.log(data);
-            $('#plan_'+id_plan).remove();
-            $('#modal-notification').modal('toggle');
-        });
-    }
-</script>

@@ -2,6 +2,7 @@
     @if(in_array(request()->route()->getName(), ['dashboard', 'planes', 'profile', 'profile-example', 'users', 'bootstrap-tables', 'transactions',
     'buttons',
     'agregarPlan', 'visualizarPlan', 'planActividades', 'equipos', 'equiposAgregar', 'actividades', 'actividadesAgregar', 'usuarios', 'usuariosAgregar',
+    'auxPlanes', 'auxActividades',
     'forms', 'modals', 'notifications', 'typography', 'upgrade-to-pro']))
 
     {{-- Nav --}}

@@ -1,4 +1,5 @@
 <div class="row">
-    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+    <div class="col-12 col-sm-12 col-xl-12 mb-12">
+        <img src="/assets/img/utt_l.png">
     </div>
 </div>

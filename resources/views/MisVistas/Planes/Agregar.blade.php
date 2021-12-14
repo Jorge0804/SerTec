@@ -33,8 +33,12 @@
                         <div class="col-lg-4 col-sm-6">
                             <div class="mb-4">
                                 <label for="email">Responsable</label>
-                                <input name="responsable" type="text" class="form-control" id="email" aria-describedby="emailHelp" required>
-                                <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+                                <select class="form-select" id="country" aria-label="Default select example" name="id_auxiliar" required>
+                                    <option value="" disabled selected>Selecciona un auxiliar</option>
+                                    @foreach($auxiliares as $auxiliar)
+                                        <option value="{{$auxiliar->id}}">{{$auxiliar->first_name.' '.$auxiliar->last_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-6">

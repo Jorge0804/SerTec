@@ -22,4 +22,8 @@ class planes extends Model
     function cuatrimestre(){
         return $this->hasOne(cuatrimestre::class, 'id_cuatrimestre', 'id_cuatrimestre');
     }
+
+    function user(){
+        return $this->hasOne(User::class, 'id', 'responsable');
+    }
 }

@@ -31,7 +31,7 @@
                         <div class="col-lg-4 col-sm-6">
                             <div class="mb-4">
                                 <label for="email">Responsable</label>
-                                <input name="responsable" type="text" class="form-control" value="{{$plan->responsable}}" aria-describedby="emailHelp" readonly>
+                                <input name="responsable" type="text" class="form-control" value="{{$plan->user->first_name.' '.$plan->user->last_name}}" aria-describedby="emailHelp" readonly>
                                 <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
                             </div>
                         </div>
